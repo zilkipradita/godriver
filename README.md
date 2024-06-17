@@ -1,6 +1,5 @@
 ## Zilki Pradita (mr.zilkipradita@gmail.com)
 
---------------------------------------------------------------------------
 Python
 
 Python 3.12.3
