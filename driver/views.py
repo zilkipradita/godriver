@@ -85,6 +85,7 @@ def login(request):
             if decoded == True :
 
                 users = {}
+                users['id']       = users_serializer.data['id']
                 users['username'] = users_serializer.data['username']
                 users['name']     = users_serializer.data['name']
                 users['telp']     = users_serializer.data['telp']
