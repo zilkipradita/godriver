@@ -28,22 +28,36 @@ pip install pyjwt
 ```
 pip install django-cors-headers
 ```
-6. Enter the godriver directory and migrate tables
+5. Install django-rest-swagger
+```
+pip install django-rest-swagger
+```
+6. Install drf-yasg
+```
+pip install drf-yasg
+```
+7. Enter the godriver directory and migrate tables
 ```
 python manage.py migrate
 ```
-7. Run the app
+9. Run the app
 ```
 python manage.py runserver
 ```
 The godriver backend is up and running, and here is a preview
 
 --------------------------------------------------------------------------
-Login
-![login](https://github.com/zilkipradita/godriver/assets/11170489/45d76e5d-713b-4f20-b887-1e78264d4888)
+## Swagger Documentation
 
-Showing list of trips
-![show_trips](https://github.com/zilkipradita/godriver/assets/11170489/8f27e700-ac28-4201-b9e7-a47d17176d2e)
+Visit this link http://127.0.0.1:8000/doc/
+
+![list](https://github.com/zilkipradita/godriver/assets/11170489/3bacbbe2-a699-46bc-a09e-4309dc3d4f40)
+
+Login
+
+Test Login endpoint and successfully tested
+
+![login](https://github.com/zilkipradita/godriver/assets/11170489/9a6c3838-fe8f-4aef-9a9d-3af39d78f850)
 
 Thanks
 
