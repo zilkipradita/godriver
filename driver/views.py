@@ -15,6 +15,10 @@ from driver.serializers import Users_rolesSerializer
 from driver.serializers import Users_Serializer
 from driver.serializers import Trips_Serializer
 from driver.serializers import Order_tripsSerializer
+from driver.serializers import User_loginSerializer
+from driver.serializers import Create_userSerializer
+from driver.serializers import Create_tripsSerializer
+from driver.serializers import Takes_orderSerializer
 from rest_framework.decorators import api_view
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.hashers import make_password
@@ -22,11 +26,14 @@ from django.contrib.auth.hashers import check_password
 import jwt
 from datetime import timedelta
 from random import randrange
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
 
 def index(request):
     return HttpResponse("Hello, world. You're at the Driver index.")
 
 @csrf_exempt
+@swagger_auto_schema(methods=['POST'], request_body=Create_userSerializer)
 @api_view(['POST'])
 def create_user(request):
     dt = datetime.now() 
@@ -58,12 +65,14 @@ def create_user(request):
 
         return JsonResponse(response_data, status=status.HTTP_412_PRECONDITION_FAILED)
 
-@api_view(['GET'])        
+@csrf_exempt
+@swagger_auto_schema(methods=['POST'], request_body=User_loginSerializer)
+@api_view(['POST']) 
 def login(request):
     dt = datetime.now() 
     response_data = {} 
 
-    if request.method == 'GET':
+    if request.method == 'POST':
         users_data = JSONParser().parse(request)
         username = users_data['username']
         password = users_data['password']
@@ -124,6 +133,7 @@ def generate_token(username):
     return encoded_jwt
 
 @csrf_exempt
+@swagger_auto_schema(methods=['POST'], request_body=Create_tripsSerializer, manual_parameters=[openapi.Parameter('token',openapi.IN_HEADER,description="token", type=openapi.IN_HEADER)])
 @api_view(['POST'])
 def create_trips(request):
   dt = datetime.now() 
@@ -168,7 +178,8 @@ def create_trips(request):
             response_data['date']    = str(date.today()) + " " + str(dt.hour) + ":" + str(dt.minute) + ":" + str(dt.second)
 
             return JsonResponse(response_data, status=status.HTTP_412_PRECONDITION_FAILED)
-            
+
+@swagger_auto_schema(methods=['GET'], manual_parameters=[openapi.Parameter('token',openapi.IN_HEADER,description="token", type=openapi.IN_HEADER)])
 @api_view(['GET'])
 def show_trips(request):
     dt = datetime.now() 
@@ -206,6 +217,7 @@ def show_trips(request):
 
         return JsonResponse(response_data,  status=status.HTTP_200_OK, safe=False)    
 
+@swagger_auto_schema(methods=['DELETE'], manual_parameters=[openapi.Parameter('token',openapi.IN_HEADER,description="token", type=openapi.IN_HEADER)])
 @api_view(['DELETE'])
 def delete_trips(request, id, user):
     dt = datetime.now() 
@@ -229,6 +241,7 @@ def delete_trips(request, id, user):
             return JsonResponse(response_data, status=status.HTTP_404_NOT_FOUND)
         
 @csrf_exempt
+@swagger_auto_schema(methods=['POST'], request_body=Takes_orderSerializer, manual_parameters=[openapi.Parameter('token',openapi.IN_HEADER,description="token", type=openapi.IN_HEADER)])
 @api_view(['POST'])
 def takes_order(request):
     dt = datetime.now() 
@@ -289,7 +302,8 @@ def takes_order(request):
             response_data['date']    = str(date.today()) + " " + str(dt.hour) + ":" + str(dt.minute) + ":" + str(dt.second)
 
             return JsonResponse(response_data, status=status.HTTP_412_PRECONDITION_FAILED)
-        
+
+@swagger_auto_schema(methods=['GET'], manual_parameters=[openapi.Parameter('token',openapi.IN_HEADER,description="token", type=openapi.IN_HEADER)])
 @api_view(['GET'])   
 def trips_status(request, id):
     dt = datetime.now() 
@@ -330,6 +344,8 @@ def trips_status(request, id):
             return JsonResponse(response_data, status=status.HTTP_404_NOT_FOUND)
             
 
+
+@swagger_auto_schema(methods=['PUT'], manual_parameters=[openapi.Parameter('token',openapi.IN_HEADER,description="token", type=openapi.IN_HEADER)])
 @api_view(['PUT'])  
 def order_done(request, id, driver):
     dt = datetime.now() 
@@ -357,7 +373,7 @@ def order_done(request, id, driver):
 
             return JsonResponse(response_data, status=status.HTTP_404_NOT_FOUND)
         
-
+@swagger_auto_schema(methods=['PUT'], manual_parameters=[openapi.Parameter('token',openapi.IN_HEADER,description="token", type=openapi.IN_HEADER)])
 @api_view(['PUT'])  
 def order_canceled(request, id, driver):
     dt = datetime.now() 

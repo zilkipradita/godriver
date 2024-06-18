@@ -26,4 +26,28 @@ class Order_tripsSerializer(serializers.ModelSerializer):
  
     class Meta:
         model = Order_trips
-        fields = ('id','trips','driver')        
+        fields = ('id','trips','driver')
+
+class User_loginSerializer(serializers.ModelSerializer):
+ 
+    class Meta:
+        model = Users
+        fields = ('username','password')
+
+class Create_userSerializer(serializers.ModelSerializer):
+ 
+    class Meta:
+        model = Users
+        fields = ('username','password','name','telp','email','users_roles')
+
+class Create_tripsSerializer(serializers.ModelSerializer):
+ 
+    class Meta:
+        model = Trips
+        fields = ('destination','location','users')
+
+class Takes_orderSerializer(serializers.ModelSerializer):
+ 
+    class Meta:
+        model = Order_trips
+        fields = ('trips','driver')

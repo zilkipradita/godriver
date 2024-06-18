@@ -12,7 +12,7 @@ class CustomMiddleware(MiddlewareMixin):
         dt = datetime.now() 
         response_data = {}
 
-        if request.path == '/login' or request.path == '/create_user' :
+        if request.path == '/login' or request.path == '/create_user' or request.path == '/doc/' :
             return None
         else :
             try :
@@ -36,7 +36,5 @@ class CustomMiddleware(MiddlewareMixin):
                 return JsonResponse(response_data, status=status.HTTP_401_UNAUTHORIZED, safe=False)
                 
     def process_response(self, request, response):
-        # This method is called after the view
-        # You can modify the response here
-       
+        
         return response
