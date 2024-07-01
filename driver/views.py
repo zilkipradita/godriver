@@ -134,7 +134,7 @@ def generate_token(username):
     return encoded_jwt
 
 @csrf_exempt
-@swagger_auto_schema(methods=['POST'], request_body=Create_tripsSerializer, manual_parameters=[openapi.Parameter('token',openapi.IN_HEADER,description="token", type=openapi.IN_HEADER)])
+@swagger_auto_schema(methods=['POST'], request_body=Create_tripsSerializer, manual_parameters=[openapi.Parameter('token',openapi.IN_HEADER,description="token", type=openapi.IN_HEADER),openapi.Parameter('username',openapi.IN_HEADER,description="username", type=openapi.IN_HEADER)])
 @api_view(['POST'])
 def create_trips(request):
   dt = datetime.now() 
@@ -180,7 +180,7 @@ def create_trips(request):
 
             return JsonResponse(response_data, status=status.HTTP_412_PRECONDITION_FAILED)
 
-@swagger_auto_schema(methods=['GET'], manual_parameters=[openapi.Parameter('token',openapi.IN_HEADER,description="token", type=openapi.IN_HEADER)])
+@swagger_auto_schema(methods=['GET'], manual_parameters=[openapi.Parameter('token',openapi.IN_HEADER,description="token", type=openapi.IN_HEADER),openapi.Parameter('username',openapi.IN_HEADER,description="username", type=openapi.IN_HEADER)])
 @api_view(['GET'])
 def show_trips(request):
     dt = datetime.now() 
@@ -218,7 +218,7 @@ def show_trips(request):
 
         return JsonResponse(response_data,  status=status.HTTP_200_OK, safe=False)    
 
-@swagger_auto_schema(methods=['DELETE'], manual_parameters=[openapi.Parameter('token',openapi.IN_HEADER,description="token", type=openapi.IN_HEADER)])
+@swagger_auto_schema(methods=['DELETE'], manual_parameters=[openapi.Parameter('token',openapi.IN_HEADER,description="token", type=openapi.IN_HEADER),openapi.Parameter('username',openapi.IN_HEADER,description="username", type=openapi.IN_HEADER)])
 @api_view(['DELETE'])
 def delete_trips(request, id, user):
     dt = datetime.now() 
@@ -242,7 +242,7 @@ def delete_trips(request, id, user):
             return JsonResponse(response_data, status=status.HTTP_404_NOT_FOUND)
         
 @csrf_exempt
-@swagger_auto_schema(methods=['POST'], request_body=Takes_orderSerializer, manual_parameters=[openapi.Parameter('token',openapi.IN_HEADER,description="token", type=openapi.IN_HEADER)])
+@swagger_auto_schema(methods=['POST'], request_body=Takes_orderSerializer, manual_parameters=[openapi.Parameter('token',openapi.IN_HEADER,description="token", type=openapi.IN_HEADER),openapi.Parameter('username',openapi.IN_HEADER,description="username", type=openapi.IN_HEADER)])
 @api_view(['POST'])
 def takes_order(request):
     dt = datetime.now() 
@@ -304,7 +304,7 @@ def takes_order(request):
 
             return JsonResponse(response_data, status=status.HTTP_412_PRECONDITION_FAILED)
 
-@swagger_auto_schema(methods=['GET'], manual_parameters=[openapi.Parameter('token',openapi.IN_HEADER,description="token", type=openapi.IN_HEADER)])
+@swagger_auto_schema(methods=['GET'], manual_parameters=[openapi.Parameter('token',openapi.IN_HEADER,description="token", type=openapi.IN_HEADER),openapi.Parameter('username',openapi.IN_HEADER,description="username", type=openapi.IN_HEADER)])
 @api_view(['GET'])   
 def trips_status(request, id):
     dt = datetime.now() 
@@ -346,7 +346,7 @@ def trips_status(request, id):
             
 
 
-@swagger_auto_schema(methods=['PUT'], manual_parameters=[openapi.Parameter('token',openapi.IN_HEADER,description="token", type=openapi.IN_HEADER)])
+@swagger_auto_schema(methods=['PUT'], manual_parameters=[openapi.Parameter('token',openapi.IN_HEADER,description="token", type=openapi.IN_HEADER),openapi.Parameter('username',openapi.IN_HEADER,description="username", type=openapi.IN_HEADER)])
 @api_view(['PUT'])  
 def order_done(request, id, driver):
     dt = datetime.now() 
@@ -374,7 +374,7 @@ def order_done(request, id, driver):
 
             return JsonResponse(response_data, status=status.HTTP_404_NOT_FOUND)
         
-@swagger_auto_schema(methods=['PUT'], manual_parameters=[openapi.Parameter('token',openapi.IN_HEADER,description="token", type=openapi.IN_HEADER)])
+@swagger_auto_schema(methods=['PUT'], manual_parameters=[openapi.Parameter('token',openapi.IN_HEADER,description="token", type=openapi.IN_HEADER),openapi.Parameter('username',openapi.IN_HEADER,description="username", type=openapi.IN_HEADER)])
 @api_view(['PUT'])  
 def order_canceled(request, id, driver):
     dt = datetime.now() 
